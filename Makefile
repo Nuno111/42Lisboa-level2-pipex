@@ -1,4 +1,4 @@
-NAME = push_swap
+NAME = pipex
 
 CC = gcc
 
@@ -10,20 +10,20 @@ DEP_FLAGS = -I. -Ilibft
 
 LIBFT = libft/libft.a
 
-LIB = push_swap.h
+LIB = pipex.h
 
 SRC = ${wildcard *.c}
 
-all: libft push_swap
+all: libft pipex
 
 libft:
 	cd libft && ${MAKE}
 
-push_swap: ${LIB} ${SRC}
+pipex: ${LIB} ${SRC}
 	${CC} ${ERR_FLAGS} ${DEBUG_FLAGS} ${DEP_FLAGS} ${SRC} ${LIBFT} -o $@
 
 clean:
-	rm -rf push_swap *.dSYM
+	rm -rf ${NAME} *.dSYM
 
 fclean: clean
 	cd libft && ${MAKE} fclean
