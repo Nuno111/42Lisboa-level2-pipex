@@ -4,4 +4,7 @@
 # include "libft.h"
 # include "unistd.h"
 
+void	ft_exit(char *err);
+char	**get_paths();
+
 # endif
