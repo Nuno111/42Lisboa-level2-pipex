@@ -18,6 +18,7 @@ char	**get_paths()
 			trimmed = ft_strtrim(line, "\"");
 			paths = ft_split(&trimmed[6], ':');
 			free(trimmed);
+			free(line);
 			return (paths);
 		}
 	}
