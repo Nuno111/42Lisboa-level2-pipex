@@ -20,6 +20,15 @@ int	main(int argc, char *argv[], char **envp)
 		ft_exit("Insufficient arguments");
 	paths = get_paths(envp, argv);
 	commands = parse_commands(argc, argv);
+	for (int j = 0; commands[j]; j++)
+	{
+		int b = 0;
+		while (commands[j][b])
+		{
+			printf("%s\n", commands[j][b]);
+			b++;
+		}
+	}
 	pid = fork();
 	char *argm[] = {"ls", "-l", NULL};
 	while (paths[i])
@@ -31,5 +40,9 @@ int	main(int argc, char *argv[], char **envp)
 		i++;
 	}
 	ft_freearrays(paths);
+	int j = -1;
+	while (commands[++j])
+		ft_freearrays(commands[j]);
+	free(commands);
 	return (0);
 }
