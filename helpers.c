@@ -1,24 +1,37 @@
 #include "pipex.h"
 
-char	**get_paths()
+static	void	finish_paths(char **paths, char **argv)
 {
-    int		fd;
+	int		i;
+	char	*tmp;
+
+
+	i = 0;
+	while (paths[i])
+	{
+		ft_add_letter('/', &paths[i], false);
+		tmp = paths[i];
+		paths[i] = ft_strjoin(paths[i], argv[2]);
+		free(tmp);
+		i++;
+	}
+}
+
+char	**get_paths(char **envp, char **argv)
+{
 	char	*line;
 	char	**paths;
-	char	*trimmed;
+	int		i;
 
 	line = NULL;
-    fd = open("/etc/environment", O_RDONLY);
-	if (fd == -1)
-		ft_exit("Couldn't open file for reading");
-	while (get_next_line(fd, &line) > 0)
+	i = -1;
+	while (envp[++i])
 	{
-		if (ft_strncmp("PATH=", line, 5) == 0)
+		if (ft_strncmp("PATH=", envp[i], 5) == 0)
 		{
-			trimmed = ft_strtrim(line, "\"");
-			paths = ft_split(&trimmed[6], ':');
-			free(trimmed);
+			paths = ft_split(&envp[i][5], ':');
 			free(line);
+			finish_paths(paths, argv);
 			return (paths);
 		}
 	}

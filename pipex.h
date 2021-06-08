@@ -5,6 +5,6 @@
 # include "unistd.h"
 
 void	ft_exit(char *err);
-char	**get_paths();
+char	**get_paths(char **envp, char **argv);
 
 # endif
