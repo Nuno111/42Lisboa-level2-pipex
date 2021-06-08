@@ -1,5 +1,19 @@
 #include "pipex.h"
 
+char ***parse_commands(int argc, char **argv)
+{
+	char	***cmds;
+	int		i;
+
+	i = -1;
+	cmds = malloc(sizeof(char **) * (argc - 2));
+	if (cmds)
+		ft_exit("Unable to allocate memory for comands array");
+	while (++i < argc - 2)
+		cmds[i] = ft_split(argv[i + 2], ' ');
+	return (cmds);
+}
+
 static	void	finish_paths(char **paths, char **argv)
 {
 	int		i;

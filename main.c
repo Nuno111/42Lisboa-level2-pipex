@@ -10,6 +10,7 @@ void	ft_exit(char *err)
 int	main(int argc, char *argv[], char **envp)
 {
 	char	**paths;
+	char	***commands;
 	int		i;
 	pid_t	pid;
 
@@ -18,6 +19,7 @@ int	main(int argc, char *argv[], char **envp)
 	if (argc < 5)
 		ft_exit("Insufficient arguments");
 	paths = get_paths(envp, argv);
+	commands = parse_commands(argc, argv);
 	pid = fork();
 	char *argm[] = {"ls", "-l", NULL};
 	while (paths[i])
