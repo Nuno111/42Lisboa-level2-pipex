@@ -15,7 +15,7 @@ char ***parse_commands(int argc, char **argv)
 	{
 		if (i == 0)
 		{
-			tmp = ft_strjoin(argv[2], ' ');
+			tmp = ft_strjoin(argv[2], " ");
 			tmp_cmd = ft_strjoin(tmp, argv[1]);
 			cmds[i] = ft_split(tmp_cmd, ' ');
 			free(tmp);
