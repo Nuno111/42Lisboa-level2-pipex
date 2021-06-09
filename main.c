@@ -1,5 +1,31 @@
 #include "pipex.h"
 
+void	exec_child(char **paths, char **cmd, int *fd)
+{
+	int		i;
+
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	i = -1;
+	while (paths[++i])
+		execve(paths[i], cmd, NULL);
+}
+
+void	exec_normal_child(char **paths, char **argv, int *fd)
+{
+	int		i;
+	char	*cmds;
+
+
+	cmds =
+
+	i = -1;
+	while (paths[++i])
+		execve(paths[i], cmds, NULL);
+
+}
+
 void	ft_exit(char *err)
 {
 	if (err)
@@ -16,35 +42,25 @@ int	main(int argc, char *argv[], char **envp)
 	pid_t	pid;
 	int		outfile;
 
-	i = 0;
+	i = -1;
 	paths = NULL;
 	if (argc < 5)
 		ft_exit("Insufficient arguments");
-	paths = get_paths(envp, argv);
 	commands = parse_commands(argc, argv);
-	outfile = open(argv[argc], O_WRONLY | O_CREAT, 0777);
-	if (outfile == -1)
-		ft_exit("Unable to open output file for writing");
 	if (pipe(fd) == -1)
 		ft_exit("Unable to open pipe file descriptors");
-	pid = fork();
-	while (paths[i])
+	while (++i < argc - 4)
 	{
+		pid = fork();
+		if (pid == -1)
+			ft_exit("Unable to fork new process");
 		if (pid == 0)
 		{
-			dup2(fd[1], STDOUT_FILENO);
-
-
-			execve(paths[i], argm, NULL);
+			paths = get_paths(envp, argv, i);
+			exec_child(paths, commands[i], fd);
+			free_array_arrays(paths);
 		}
-		else
-			printf("%s\n", paths[i]);
-		i++;
+		waitpid(pid, NULL, 0);
 	}
-	ft_freearrays(paths);
-	int j = -1;
-	while (commands[++j])
-		ft_freearrays(commands[j]);
-	free(commands);
 	return (0);
 }

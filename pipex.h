@@ -3,6 +3,7 @@
 
 # include "libft.h"
 # include "unistd.h"
+# include <sys/wait.h>
 
 void	ft_exit(char *err);
 char	**get_paths(char **envp, char **argv);

@@ -3,6 +3,8 @@
 char ***parse_commands(int argc, char **argv)
 {
 	char	***cmds;
+	char	*tmp;
+	char	*tmp_cmd;
 	int		i;
 
 	i = -1;
@@ -10,12 +12,23 @@ char ***parse_commands(int argc, char **argv)
 	if (!cmds)
 		ft_exit("Unable to allocate memory for comands array");
 	while (++i < argc - 2)
-		cmds[i] = ft_split(argv[i + 2], ' ');
+	{
+		if (i == 0)
+		{
+			tmp = ft_strjoin(argv[2], ' ');
+			tmp_cmd = ft_strjoin(tmp, argv[1]);
+			cmds[i] = ft_split(tmp_cmd, ' ');
+			free(tmp);
+			free(tmp_cmd);
+		}
+		else
+			cmds[i] = ft_split(argv[i + 2], ' ');
+	}
 	cmds[i] = NULL;
 	return (cmds);
 }
 
-static	void	finish_paths(char **paths, char **argv)
+static	void	finish_paths(char **paths, char **argv, int cmd_index)
 {
 	int		i;
 	char	*tmp;
@@ -26,13 +39,13 @@ static	void	finish_paths(char **paths, char **argv)
 	{
 		ft_add_letter('/', &paths[i], false);
 		tmp = paths[i];
-		paths[i] = ft_strjoin(paths[i], argv[2]);
+		paths[i] = ft_strjoin(paths[i], argv[cmd_index]);
 		free(tmp);
 		i++;
 	}
 }
 
-char	**get_paths(char **envp, char **argv)
+char	**get_paths(char **envp, char **argv, int cmd_index)
 {
 	char	*line;
 	char	**paths;
@@ -46,7 +59,7 @@ char	**get_paths(char **envp, char **argv)
 		{
 			paths = ft_split(&envp[i][5], ':');
 			free(line);
-			finish_paths(paths, argv);
+			finish_paths(paths, argv, cmd_index);
 			return (paths);
 		}
 	}
