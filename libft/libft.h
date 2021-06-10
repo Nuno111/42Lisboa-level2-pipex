@@ -6,7 +6,7 @@
 /*   By: ngregori <ngregori@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 17:51:15 by ngregori          #+#    #+#             */
-/*   Updated: 2021/05/28 11:10:35 by ngregori         ###   ########.fr       */
+/*   Updated: 2021/06/10 14:37:30 by ngregori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ t_list					*ft_lstmap(t_list *lst, void *(*f)(void *),
 void					ft_add_letter(char c, char **buffer, bool start);
 char					*str_join_free(char **beg, char **end);
 t_list					*ft_lstduplicate(t_list *list);
+void					ft_free_arr_arrs(char ***arrs);
 
 #endif
