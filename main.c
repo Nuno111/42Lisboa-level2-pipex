@@ -33,6 +33,7 @@ int	main(int argc, char *argv[], char **envp)
 	commands = parse_commands(argc, argv);
 	if (pipe(fd) == -1)
 		ft_exit("Unable to open pipe file descriptors");
+	/*
 	i = 2;
 	while (i < argc - 1)
 	{
@@ -47,11 +48,30 @@ int	main(int argc, char *argv[], char **envp)
 			else
 				exec_child(paths, commands[i - 2], fd);
 		}
+		if (i == 3)
+			close(fd[1]);
+		wait(NULL);
 		i++;
 	}
 	close(fd[0]);
 	close(fd[1]);
-	wait(NULL);
+	*/
+	pid = fork();
+	if (pid == 0)
+	{
+		paths = get_paths(envp, argv, 2);
+		exec_child(paths, commands[0], fd);
+	}
+	waitpid(pid, NULL, 0);
+	pid = fork();
+	if (pid == 0)
+	{
+		paths = get_paths(envp, argv, 3);
+		write_to_file(argv[4], fd, paths, commands[1]);
+	}
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
 	ft_free_arr_arrs(commands);
 	return (0);
 }

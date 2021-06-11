@@ -29,7 +29,7 @@ char	***parse_commands(int argc, char **argv)
 	cmds = malloc(sizeof(char **) * (argc - 1));
 	if (!cmds)
 		ft_exit("Unable to allocate memory for comands array");
-	while (++i < argc - 2)
+	while (++i < argc - 3)
 	{
 		if (i == 0)
 		{
@@ -50,6 +50,7 @@ static	void	finish_paths(char **paths, char **argv, int cmd_index)
 {
 	int		i;
 	char	*tmp;
+	char	**args;
 
 
 	i = 0;
@@ -57,7 +58,9 @@ static	void	finish_paths(char **paths, char **argv, int cmd_index)
 	{
 		ft_add_letter('/', &paths[i], false);
 		tmp = paths[i];
-		paths[i] = ft_strjoin(paths[i], argv[cmd_index]);
+		args = ft_split(argv[cmd_index], ' ');
+		paths[i] = ft_strjoin(paths[i], args[0]);
+		ft_freearrays(args);
 		free(tmp);
 		i++;
 	}
