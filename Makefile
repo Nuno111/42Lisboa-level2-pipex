@@ -22,6 +22,9 @@ libft:
 pipex: ${LIB} ${SRC}
 	${CC} ${ERR_FLAGS} ${DEBUG_FLAGS} ${DEP_FLAGS} ${SRC} ${LIBFT} -o $@
 
+test: all
+	./pipex notes "grep file" "grep stdout" testfile.txt
+
 clean:
 	rm -rf ${NAME} *.dSYM
 

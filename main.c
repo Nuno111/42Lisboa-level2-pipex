@@ -1,9 +1,15 @@
 #include "pipex.h"
 
-void	exec_child(char **paths, char **cmd, int *fd)
+void	exec_child(char **paths, char **cmd, int *fd, bool first_child)
 {
 	int		i;
 
+	if (!first_child)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+	}
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
@@ -34,7 +40,7 @@ int	main(int argc, char *argv[], char **envp)
 	if (pipe(fd) == -1)
 		ft_exit("Unable to open pipe file descriptors");
 	i = 2;
-	while (i < argc - 2)
+	while (i < argc - 1)
 	{
 		pid = fork();
 		if (pid == -1)
@@ -42,16 +48,15 @@ int	main(int argc, char *argv[], char **envp)
 		if (pid == 0)
 		{
 			paths = get_paths(envp, argv, i);
-			exec_child(paths, commands[i], fd);
+			if (i == 2)
+				exec_child(paths, commands[i - 2], fd, true);
+			else if (i == argc - 2)
+				write_to_file(argv[4], fd, paths, commands[i - 2]);
+			else
+				exec_child(paths, commands[i - 2], fd, false);
 		}
-		waitpid(pid, NULL, 0);
-		if (paths)
-			ft_freearrays(paths);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
 		i++;
 	}
-	//free_array_arrays(paths);
+	ft_free_arr_arrs(commands);
 	return (0);
 }

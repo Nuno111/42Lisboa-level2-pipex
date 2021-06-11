@@ -2,7 +2,7 @@
 
 void	ft_free_arr_arrs(char ***arrs)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (arrs[++i])

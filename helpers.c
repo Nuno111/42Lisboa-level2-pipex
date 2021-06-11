@@ -1,6 +1,21 @@
 #include "pipex.h"
 
-char ***parse_commands(int argc, char **argv)
+void	write_to_file(char *file_name, int *fd, char **paths, char **cmd)
+{
+	int		file_fd;
+	int		i;
+
+	file_fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+	if (file_fd == -1)
+		ft_exit("Unable to open file for writing");
+	dup2(file_fd, STDOUT_FILENO);
+	close(file_fd);
+	i = -1;
+	while (paths[++i])
+		execve(paths[i], cmd, NULL);
+}
+
+char	***parse_commands(int argc, char **argv)
 {
 	char	***cmds;
 	char	*tmp;
