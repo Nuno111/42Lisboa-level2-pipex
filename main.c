@@ -1,15 +1,9 @@
 #include "pipex.h"
 
-void	exec_child(char **paths, char **cmd, int *fd, bool first_child)
+void	exec_child(char **paths, char **cmd, int *fd)
 {
 	int		i;
 
-	if (!first_child)
-	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-	}
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
@@ -48,15 +42,16 @@ int	main(int argc, char *argv[], char **envp)
 		if (pid == 0)
 		{
 			paths = get_paths(envp, argv, i);
-			if (i == 2)
-				exec_child(paths, commands[i - 2], fd, true);
-			else if (i == argc - 2)
+			if (i == argc - 2)
 				write_to_file(argv[4], fd, paths, commands[i - 2]);
 			else
-				exec_child(paths, commands[i - 2], fd, false);
+				exec_child(paths, commands[i - 2], fd);
 		}
 		i++;
 	}
+	close(fd[0]);
+	close(fd[1]);
+	wait(NULL);
 	ft_free_arr_arrs(commands);
 	return (0);
 }

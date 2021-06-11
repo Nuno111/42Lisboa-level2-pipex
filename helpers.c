@@ -8,6 +8,9 @@ void	write_to_file(char *file_name, int *fd, char **paths, char **cmd)
 	file_fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (file_fd == -1)
 		ft_exit("Unable to open file for writing");
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	close(fd[1]);
 	dup2(file_fd, STDOUT_FILENO);
 	close(file_fd);
 	i = -1;
