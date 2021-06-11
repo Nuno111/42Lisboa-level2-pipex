@@ -1,5 +1,16 @@
 #include "pipex.h"
 
+void	file_to_stdin(char *file)
+{
+	int	file_fd;
+
+	file_fd = open(file, O_RDONLY);
+	if (file_fd == -1)
+		ft_exit("Unable to open file for reading");
+	dup2(file_fd, STDIN_FILENO);
+	close(file_fd);
+}
+
 void	write_to_file(char *file_name, int *fd, char **paths, char **cmd)
 {
 	int		file_fd;
@@ -21,8 +32,6 @@ void	write_to_file(char *file_name, int *fd, char **paths, char **cmd)
 char	***parse_commands(int argc, char **argv)
 {
 	char	***cmds;
-	char	*tmp;
-	char	*tmp_cmd;
 	int		i;
 
 	i = -1;
@@ -30,18 +39,7 @@ char	***parse_commands(int argc, char **argv)
 	if (!cmds)
 		ft_exit("Unable to allocate memory for comands array");
 	while (++i < argc - 3)
-	{
-		if (i == 0)
-		{
-			tmp = ft_strjoin(argv[2], " ");
-			tmp_cmd = ft_strjoin(tmp, argv[1]);
-			cmds[i] = ft_split(tmp_cmd, ' ');
-			free(tmp);
-			free(tmp_cmd);
-		}
-		else
-			cmds[i] = ft_split(argv[i + 2], ' ');
-	}
+		cmds[i] = ft_split(argv[i + 2], ' ');
 	cmds[i] = NULL;
 	return (cmds);
 }
@@ -51,7 +49,6 @@ static	void	finish_paths(char **paths, char **argv, int cmd_index)
 	int		i;
 	char	*tmp;
 	char	**args;
-
 
 	i = 0;
 	while (paths[i])

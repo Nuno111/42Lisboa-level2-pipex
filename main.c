@@ -31,31 +31,9 @@ int	main(int argc, char *argv[], char **envp)
 	if (argc < 5)
 		ft_exit("Insufficient arguments");
 	commands = parse_commands(argc, argv);
+	file_to_stdin(argv[1]);
 	if (pipe(fd) == -1)
 		ft_exit("Unable to open pipe file descriptors");
-	/*
-	i = 2;
-	while (i < argc - 1)
-	{
-		pid = fork();
-		if (pid == -1)
-			ft_exit("Unable to fork new process");
-		if (pid == 0)
-		{
-			paths = get_paths(envp, argv, i);
-			if (i == argc - 2)
-				write_to_file(argv[4], fd, paths, commands[i - 2]);
-			else
-				exec_child(paths, commands[i - 2], fd);
-		}
-		if (i == 3)
-			close(fd[1]);
-		wait(NULL);
-		i++;
-	}
-	close(fd[0]);
-	close(fd[1]);
-	*/
 	pid = fork();
 	if (pid == 0)
 	{
