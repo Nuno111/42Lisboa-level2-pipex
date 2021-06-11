@@ -2,7 +2,7 @@ NAME = pipex
 
 CC = gcc
 
-ERR_FLAGS = -Wall -Wextra #-Werror
+ERR_FLAGS = -Wall -Wextra -Werror
 
 DEBUG_FLAGS = -g -fsanitize=address
 

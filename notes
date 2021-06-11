@@ -1,2 +1,0 @@
-file2 = dup2(file, STDOUT)
-duplica o file descriptor de file, fecha o stream do stdout e redireciona-o para file2
