@@ -13,11 +13,13 @@ The main things to understand here is to understand what the following functions
 All code is written in accordance to the norminette version running at the time of project completion.
 
 ## How to use
-In order to run this project you will need to compile it using the make command and pass the parameters to the executable as shown in the example below
+In order to run this project you will need to compile it using the make command and pass the parameters to the executable as shown in the example below.
 
 ```
 make
 ```
+
+Example of usage:
 
 ```
 $> ./pipex infile ``ls -l'' ``wc -l'' outfile
