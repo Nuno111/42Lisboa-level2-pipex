@@ -45,6 +45,12 @@ If you do that, then your grep command will work but ls won't.
 
 Ls doesn't take files as input but grep does.
 
+## Usefull resources
+
+[How fork works](https://stackoverflow.com/questions/15102328/how-does-fork-work)
+
+[How dup2 works](https://www.youtube.com/watch?v=PIb2aShU_H4&ab_channel=KrisJordan)
+
 ## Contact
 
 For any questions regarding my project email me at: Nuno_c11@hotmail.com
