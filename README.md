@@ -28,7 +28,7 @@ $> ./pipex infile ``ls -l'' ``wc -l'' outfile
 Should give the same output as running the below command on your terminal
 
 ```
-$> ./pipex infile ``grep a1'' ``wc -w'' outfile
+$> < infile ls -l | wc -l > outfile
 ```
 
 ## Things to consider when doing this project
