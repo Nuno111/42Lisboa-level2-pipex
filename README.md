@@ -45,7 +45,7 @@ If you do that, then your grep command will work but ls won't.
 
 Ls doesn't take files as input but grep does.
 
-## Usefull resources
+## Useful resources
 
 [How fork works](https://stackoverflow.com/questions/15102328/how-does-fork-work)
 
